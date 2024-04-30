@@ -8,7 +8,8 @@ public class NewBehaviourScript : MonoBehaviour
 
     private GameObject player;
     private bool active = false;
-    [SerializeField] private float speed;
+    [SerializeField] private float minSpeed;
+    [SerializeField] private float maxSpeed;
     private float dif;
 
 
@@ -21,6 +22,25 @@ public class NewBehaviourScript : MonoBehaviour
 
     void Update()
     {
+        /*if (Input.GetKeyDown("t"))
+        {
+            active = true;
+        }
+
+        if (active == true)
+        {
+            dif = (player.transform.position - transform.position).magnitude;
+            float step = Mathf.Clamp(speed * Time.deltaTime * dif, minSpeed, 1f);
+            //Debug.Log(step);
+            //Debug.Log("Distance :" +dif);
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position + new Vector3(0f, 0.5f, 0f), step);
+        }*/
+
+
+    }
+
+    private void FixedUpdate()
+    {
         if (Input.GetKeyDown("t"))
         {
             active = true;
@@ -29,12 +49,11 @@ public class NewBehaviourScript : MonoBehaviour
         if (active == true)
         {
             dif = (player.transform.position - transform.position).magnitude;
-            float step = speed * Time.deltaTime * dif;
+            float step = Mathf.Clamp(Time.fixedDeltaTime * dif, minSpeed, maxSpeed);
+            //Debug.Log(step);
             //Debug.Log("Distance :" +dif);
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position + new Vector3(0f, 0.5f, 0f), step);
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position + new Vector3(0f, 0.5f, 0f), step*2);
         }
-
-
     }
 
     private void OnTriggerEnter(Collider collider)
