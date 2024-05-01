@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class EnnemiCTRL : MonoBehaviour
 {
 
     private GameObject player;
     private bool active = false;
     [SerializeField] private float minSpeed;
     [SerializeField] private float maxSpeed;
+    [SerializeField] private float activeDistance;
     private float dif;
 
 
@@ -37,6 +38,14 @@ public class NewBehaviourScript : MonoBehaviour
         }*/
 
 
+    }
+
+    public void ActiveEnnemi (GameObject go)
+    {
+        if ((go.transform.position - transform.position).magnitude <= activeDistance) 
+        {
+            active = true;
+        }
     }
 
     private void FixedUpdate()

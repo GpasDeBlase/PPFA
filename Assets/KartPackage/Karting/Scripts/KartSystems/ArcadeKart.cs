@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.VFX;
+using System.Collections;
 
 namespace KartGame.KartSystems
 {
@@ -174,6 +175,26 @@ namespace KartGame.KartSystems
         public bool m_CanMove = true;
         List<StatPowerup> m_ActivePowerupList = new List<StatPowerup>();
         ArcadeKart.Stats m_FinalStats;
+        
+        // ####################################################################################################
+        // ####################################################################################################
+        // ####################################################################################################
+        // ####################################################################################################
+        
+        public void StopMove(float tempsStop)
+        {
+            StartCoroutine(coStopMove(tempsStop));
+        }
+        
+        IEnumerator coStopMove(float cTempsStop)
+        {
+            m_CanMove = false;
+            yield return new WaitForSeconds(cTempsStop);
+            m_CanMove = true;
+        }
+        
+        // ####################################################################################################
+        // ####################################################################################################
 
         Quaternion m_LastValidRotation;
         Vector3 m_LastValidPosition;
