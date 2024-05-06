@@ -8,9 +8,9 @@ public class EnnemiCTRL : MonoBehaviour
 
     private GameObject player;
     private bool active = false;
-    [SerializeField] private float minSpeed;
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float activeDistance;
+    [SerializeField] private float minSpeed; //0.05
+    [SerializeField] private float maxSpeed; // 5
+    [SerializeField] private float activeDistance; //15
     private float dif;
 
 

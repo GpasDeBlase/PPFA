@@ -1,3 +1,4 @@
+using KartGame.KartSystems;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -36,6 +37,7 @@ public class QTESystem : MonoBehaviour
     private float rota;                                     // position pour la zone a viser
     private float perRota;
     private float lenObjectif;
+    public GameObject player;
 
 
     void Start()
@@ -139,11 +141,16 @@ public class QTESystem : MonoBehaviour
 
     void Echec ()
     {
+        
+
         GameObject[] ennemis = GameObject.FindGameObjectsWithTag("Ennemi");                             // Quand un QTE n'est pas reussi cherche tout les go avec le tag ennemi
         foreach (GameObject go in ennemis)                                                              // Pour chaque Ennemi dans la liste fait la boucle
         {
             go.GetComponent<EnnemiCTRL>().ActiveEnnemi(GameObject.Find("NewKartClassic_Player"));       // Trouve le script de l'ennemi et lance la methode ActiveEnnemi
         }
+
+        Debug.Log(player);
+        player.GetComponent<ArcadeKart>().StopMove(tempsMax);
 
         //GameObject.FindGameObjectsWithTag("Player").GetComponent<ArcadeKart>().StopMove(tempsMax);
 
