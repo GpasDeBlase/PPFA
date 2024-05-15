@@ -14,6 +14,7 @@ public class EnnemiCTRL : MonoBehaviour
     private float dif;
 
 
+
     void Start()
     {
         player = GameObject.Find("NewKartClassic_Player");
@@ -50,6 +51,8 @@ public class EnnemiCTRL : MonoBehaviour
 
     private void FixedUpdate()
     {
+        transform.LookAt(player.transform);
+
         if (Input.GetKeyDown("t"))
         {
             active = true;
@@ -61,7 +64,7 @@ public class EnnemiCTRL : MonoBehaviour
             float step = Mathf.Clamp(Time.fixedDeltaTime * dif, minSpeed, maxSpeed);
             //Debug.Log(step);
             //Debug.Log("Distance :" +dif);
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position + new Vector3(0f, 0.5f, 0f), step*2);
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position /*+ new Vector3(0f, 0.5f, 0f)*/, step*2);
         }
     }
 
@@ -70,7 +73,8 @@ public class EnnemiCTRL : MonoBehaviour
         if(collider.gameObject.tag == "Player")
         {
             Debug.Log("destroy");
-            //Destroy(gameObject);
+            GameObject.Find("systemInGame").GetComponent<InGameSystem>().perdu();
+
         }
     } 
 }

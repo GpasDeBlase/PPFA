@@ -16,11 +16,13 @@ public class QTESystem : MonoBehaviour
     [Header("Parametres QTE")]
     [Min(1f), Tooltip("Temps minimal avant le prochain QTE")]
     public int tempsMin;
-    [Range(1f, 60f), Tooltip("Temps maximal avant le prochain QTE")]
-    public int tempsMax;
-    [Min(0.5f), Tooltip("Temps pour que le QTE se fasse")]
-    public float tempsRemplissage = 1;     // temps pour remplir le cercle
-    [Range(1f,10f), Tooltip("Temps durant lequel le moteur est coupe apres un echec")]
+    [Range(1f, 10f), Tooltip("Temps maximal avant le prochain QTE")]
+    public float tempsMax;
+    [Min(0.5f), Tooltip("Temps minimal pour le le cercle se remplisse")]
+    public float tempsRemplissageMin;
+    [Range(1f,5f), Tooltip("Temps maximal pour le le cercle se remplisse")]
+    public float tempsRemplissageMax;      
+    [Range(0.5f,2f), Tooltip("Temps durant lequel le moteur est coupe apres un echec")]
     public float tempsStop;
 
     [Header("references")]
@@ -29,6 +31,7 @@ public class QTESystem : MonoBehaviour
     public TextMeshProUGUI txt;                             // tmp de reussite
     public GameObject cercleQTE;                            // cercle qui se rempli
     public GameObject objectif;                             // zone a viser pour reussir le qte
+    public AudioSource boom;
 
     // variables privees
     private float timeBeforeEvent;                          // temps entre deux qte
@@ -92,7 +95,7 @@ public class QTESystem : MonoBehaviour
         // setup zone a viser
         rota = Random.Range(-270f, -90f);                           // random position pour la zone a viser
         objectif.transform.rotation = Quaternion.Euler(0, 0, rota); // Set la rotation au gameObject
-        objectif.GetComponent<Image>().fillAmount = Random.Range(0.05f, 0.15f);
+        objectif.GetComponent<Image>().fillAmount = Random.Range(0.05f, 0.10f);
 
 
 
@@ -104,6 +107,7 @@ public class QTESystem : MonoBehaviour
     IEnumerator fillCircle()
     {
         float elapsedTime = 0f;
+        float tempsRemplissage = Random.Range(tempsRemplissageMin, tempsRemplissageMax);
         while (elapsedTime < tempsRemplissage && isQTE == true)
         {
             float per = elapsedTime / tempsRemplissage;
@@ -142,7 +146,7 @@ public class QTESystem : MonoBehaviour
     void Echec ()
     {
         
-
+        boom.Play();
         GameObject[] ennemis = GameObject.FindGameObjectsWithTag("Ennemi");                             // Quand un QTE n'est pas reussi cherche tout les go avec le tag ennemi
         foreach (GameObject go in ennemis)                                                              // Pour chaque Ennemi dans la liste fait la boucle
         {
@@ -150,7 +154,7 @@ public class QTESystem : MonoBehaviour
         }
 
         Debug.Log(player);
-        player.GetComponent<ArcadeKart>().StopMove(tempsMax);
+        player.GetComponent<ArcadeKart>().StopMove(tempsStop);
 
         //GameObject.FindGameObjectsWithTag("Player").GetComponent<ArcadeKart>().StopMove(tempsMax);
 
