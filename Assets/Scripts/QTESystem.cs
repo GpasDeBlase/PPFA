@@ -95,7 +95,7 @@ public class QTESystem : MonoBehaviour
         // setup zone a viser
         rota = Random.Range(-270f, -90f);                           // random position pour la zone a viser
         objectif.transform.rotation = Quaternion.Euler(0, 0, rota); // Set la rotation au gameObject
-        objectif.GetComponent<Image>().fillAmount = Random.Range(0.05f, 0.10f);
+        objectif.GetComponent<Image>().fillAmount = Random.Range(0.06f, 0.12f);
 
 
 
